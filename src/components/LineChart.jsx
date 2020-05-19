@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Line, Bar } from 'react-chartjs-2';
 import axios from 'axios';
 
-const BarChart = () => {
+const LineChart = () => {
   const [chartData, setChartData] = useState({});
 
   const chart = () => {
@@ -32,7 +32,7 @@ const BarChart = () => {
             {
               label: '',
               data: listOfAmounts,
-              backgroundColor: 'rgba(252, 77, 77)',
+              backgroundColor: 'rgba(150, 0, 255, 0.5)',
 
               borderWidth: 4,
             },
@@ -42,7 +42,7 @@ const BarChart = () => {
       .catch(err => {
         // console.log(err);
       });
-    // console.log('kkk', listOfDays, listOfAmounts);
+    console.log('kkk', listOfDays, listOfAmounts);
   };
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const BarChart = () => {
     <div className='App'>
       {/* <h1>Rain Fall</h1> */}
 
-      <Bar
+      <Line
         data={chartData}
         options={{
           responsive: true,
@@ -84,4 +84,4 @@ const BarChart = () => {
   );
 };
 
-export default BarChart;
+export default LineChart;

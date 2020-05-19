@@ -1,4 +1,19 @@
 .App {
-  width: 70%;
+  width: 60%;
   float: right;
+  position: relative;
+}
+.top-chart {
+  margin-top: -22%;
+  position: relative;
+  margin-right: 10%;
+}
+.bottom-chart {
+  margin-top: -22%;
+  position: relative;
+  margin-right: 10%;
+}
+.bottom-slider {
+  margin-top: 55%;
+  position: relative;
 }
