@@ -15,17 +15,12 @@ const BarChart = () => {
         const { days } = res.data[0];
         // console.log(days);
         days.forEach(({ day, amount }) => {
-          console.log(day);
-          console.log(amount);
+          // console.log(day);
+          // console.log(amount);
           listOfDays.push(day);
           listOfAmounts.push(amount);
         });
 
-        // res.map(data => <li>kkkk</li>);
-        // for (const dataObj of res) {
-        //   day.push(parseInt(dataObj.data.days[0]));
-        //   amount.push(parseInt(dataObj.amount));
-        // }
         setChartData({
           labels: listOfDays,
           datasets: [
@@ -48,6 +43,7 @@ const BarChart = () => {
   useEffect(() => {
     chart();
   }, []);
+
   return (
     <div className='App'>
       {/* <h1>Rain Fall</h1> */}

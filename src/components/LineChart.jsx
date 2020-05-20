@@ -2,8 +2,77 @@ import React, { useState, useEffect } from 'react';
 import { Line, Bar } from 'react-chartjs-2';
 import axios from 'axios';
 
-const LineChart = () => {
+const LineChart = ({ currentTemperature, currentPressure }) => {
   const [chartData, setChartData] = useState({});
+  // console.log(currentPressure, currentTemperature);
+  const [data, setData] = useState([]);
+  let means = [];
+  let upper_bounds = [];
+  let lower_bounds = [];
+
+  const chanceOfRain = amount => {
+    means = [];
+    upper_bounds = [];
+    lower_bounds = [];
+    data.forEach(({ amount }, i) => {
+      console.log(amount);
+      let score =
+        Math.log(amount + 1) *
+        Math.log(currentPressure - 929) *
+        Math.log(currentTemperature - 9);
+
+      //calculating mean, upper_bound and lower_bound value
+      let mean = Math.min(Math.max(score, 0), 100);
+      let upper_bound = Math.min(1.5 * mean, 100);
+      let lower_bound = Math.max(0.5 * mean, 0);
+
+      means.push(mean);
+      upper_bounds.push(upper_bound);
+      lower_bounds.push(lower_bound);
+    });
+    console.log(means, upper_bounds, lower_bounds);
+    if (means[0] && upper_bounds[0] && lower_bounds[0]) {
+      setChartData({
+        // labels: [1, 78, 3, 4, 5, 6, 7],
+        datasets: [
+          {
+            label: 'Mean',
+            data: means,
+            borderColor: '#fff',
+            backgroundColor: 'rgba(170, 194, 17)',
+            borderWidth: 4,
+            fill: true,
+          },
+          {
+            label: 'upper bound',
+            data: upper_bounds,
+
+            backgroundColor: 'rgba(235, 168, 117)',
+            borderWidth: 4,
+            fill: true,
+          },
+          {
+            label: 'Lower bound',
+            data: lower_bounds,
+            borderColor: '18, 17, 17',
+            backgroundColor: 'rgba(13, 224, 31)',
+            borderWidth: 4,
+            fill: false,
+          },
+        ],
+      });
+    }
+  };
+
+  const fetch = () => {
+    axios
+      .get('http://private-4945e-weather34.apiary-proxy.com/weather34/rain')
+      .then(res => {
+        const { days } = res.data[0];
+        // data = days;
+        setData(days);
+      });
+  };
 
   const chart = () => {
     let listOfDays = [];
@@ -11,47 +80,42 @@ const LineChart = () => {
     axios
       .get('http://private-4945e-weather34.apiary-proxy.com/weather34/rain')
       .then(res => {
-        // console.log('fetched data:', res.data[0].days[]);
         const { days } = res.data[0];
-        // console.log(days);
         days.forEach(({ day, amount }) => {
-          console.log(day);
-          console.log(amount);
           listOfDays.push(day);
           listOfAmounts.push(amount);
         });
 
-        // res.map(data => <li>kkkk</li>);
-        // for (const dataObj of res) {
-        //   day.push(parseInt(dataObj.data.days[0]));
-        //   amount.push(parseInt(dataObj.amount));
-        // }
         setChartData({
           labels: listOfDays,
           datasets: [
             {
               label: '',
               data: listOfAmounts,
-              backgroundColor: 'rgba(150, 0, 255, 0.5)',
-
+              backgroundColor: 'rgba(150, 0, 122, 0.5)',
+              fill: false,
               borderWidth: 4,
             },
           ],
         });
       })
       .catch(err => {
-        // console.log(err);
+        console.log(err);
       });
-    console.log('kkk', listOfDays, listOfAmounts);
   };
 
   useEffect(() => {
     chart();
+    fetch(); // rain forecast
   }, []);
+
+  useEffect(() => {
+    chanceOfRain();
+    // chart();
+  }, [currentPressure, currentTemperature]);
+
   return (
     <div className='App'>
-      {/* <h1>Rain Fall</h1> */}
-
       <Line
         data={chartData}
         options={{

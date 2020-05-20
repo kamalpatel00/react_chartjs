@@ -4,40 +4,45 @@ import BarChart from './components/BarChart';
 import Slider from './components/Slider';
 import { Row, Col, Container } from 'react-bootstrap';
 import LineChart from './components/LineChart';
-import React, { Component } from 'react';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+import React, { useState, useEffect } from 'react';
 
-    this.state = {};
-  }
+export default function App() {
+  const [pressure, setPressure] = useState(0);
+  const [temperature, setTemperature] = useState(0);
+  const callback = e => {
+    const val = e.target.value;
+    if (val >= 970 && val <= 1030) setPressure(val);
+    if (val >= 10 && val <= 35) setTemperature(val);
+  };
 
-  render() {
-    return (
-      <div className='App'>
-        <Container className='container'>
-          <Row className='top-row'>
-            <Col className='top-slider'>
-              <Slider min={970} max={1070} />
-            </Col>
-            <Col className='top-chart'>
-              {' '}
-              <BarChart data='Line' />
-            </Col>
-          </Row>
-          <Row>
-            <Col className='bottom-slider'>
-              <Slider min={10} max={35} />
-            </Col>
-            <Col className='bottom-chart'>
-              <LineChart />
-            </Col>
-          </Row>
-        </Container>
+  return (
+    <div className='App'>
+      <Container className='container'>
+        <Row className='top-row'>
+          <Col className='top-slider'>
+            <Slider min={970} max={1070} onClicked={callback} />
+          </Col>
+          <Col className='top-chart'>
+            {' '}
+            <BarChart data='Line' />
+          </Col>
+        </Row>
+        <Row>
+          <Col className='bottom-slider'>
+            <Slider min={10} max={35} onClicked={callback} />
+          </Col>
+          <Col className='bottom-chart'>
+            <LineChart
+              currentTemperature={temperature}
+              currentPressure={pressure}
+            />
+          </Col>
+        </Row>
+      </Container>
 
-        {/* <Chart /> */}
-        {/* <div className='grid-container'>
+      {/* <Chart /> */}
+      {/* <div className='grid-container'>
         <div className='BarChart'>
          
         </div>
@@ -52,9 +57,6 @@ class App extends Component {
          
         </div>
       </div> */}
-      </div>
-    );
-  }
+    </div>
+  );
 }
-
-export default App;
