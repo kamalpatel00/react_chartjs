@@ -1,5 +1,4 @@
 import './App.css';
-import Chart from './components/Chart';
 import BarChart from './components/BarChart';
 import Slider from './components/Slider';
 import { Row, Col, Container } from 'react-bootstrap';
