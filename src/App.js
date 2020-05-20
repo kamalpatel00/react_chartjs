@@ -39,23 +39,6 @@ export default function App() {
           </Col>
         </Row>
       </Container>
-
-      {/* <Chart /> */}
-      {/* <div className='grid-container'>
-        <div className='BarChart'>
-         
-        </div>
-        <div className='Slider-top'>
-          <Slider />
-        </div>
-        <div className='Slider-bottom'>
-          {' '}
-          
-        </div>
-        <div className='Chart-bottom'>
-         
-        </div>
-      </div> */}
     </div>
   );
 }
