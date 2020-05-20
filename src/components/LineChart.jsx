@@ -36,18 +36,17 @@ const LineChart = ({ currentTemperature, currentPressure }) => {
         // labels: [1, 78, 3, 4, 5, 6, 7],
         datasets: [
           {
-            label: 'Mean',
-            data: means,
-            borderColor: '#fff',
-            backgroundColor: 'rgba(170, 194, 17)',
+            label: 'upper bound',
+            data: upper_bounds,
+            backgroundColor: 'rgba(0, 140, 255, 0.5)',
             borderWidth: 4,
             fill: true,
           },
           {
-            label: 'upper bound',
-            data: upper_bounds,
-
-            backgroundColor: 'rgba(235, 168, 117)',
+            label: 'Mean',
+            data: means,
+            borderColor: '#fff',
+            backgroundColor: 'rgba(255, 0, 17, 0.5)',
             borderWidth: 4,
             fill: true,
           },
@@ -55,9 +54,9 @@ const LineChart = ({ currentTemperature, currentPressure }) => {
             label: 'Lower bound',
             data: lower_bounds,
             borderColor: '18, 17, 17',
-            backgroundColor: 'rgba(13, 224, 31)',
+            backgroundColor: 'rgba(13, 224, 31, 0.5)',
             borderWidth: 4,
-            fill: false,
+            fill: true,
           },
         ],
       });
